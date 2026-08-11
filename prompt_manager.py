@@ -128,10 +128,25 @@ def main():
         show_menu()
         choice = input("번호를 선택하세요: ").strip()
 
-        if choice == "0":
+        if choice == "1":
+            print("\n[프롬프트 추가] 준비 중입니다.")
+        elif choice == "2":
+            print("\n[프롬프트 목록] 준비 중입니다.")
+        elif choice == "3":
+            print("\n[카테고리별 조회] 준비 중입니다.")
+        elif choice == "4":
+            print("\n[프롬프트 검색] 준비 중입니다.")
+        elif choice == "5":
+            print("\n[상세 보기] 준비 중입니다.")
+        elif choice == "6":
+            print("\n[즐겨찾기 추가/해제] 준비 중입니다.")
+        elif choice == "7":
+            print("\n[즐겨찾기 목록] 준비 중입니다.")
+        elif choice == "0":
             print("\n프로그램을 종료합니다.")
             break
-
+        else:
+            print("\n잘못된 번호입니다. 다시 선택해주세요.")
 
 if __name__ == "__main__":
     main()
