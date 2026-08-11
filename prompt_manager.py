@@ -106,8 +106,32 @@ def get_default_prompts():
         },
     ]
 
-if __name__ == "__main__":
+def show_menu():
+    print("\n" + "=" * 40)
+    print("        📌 프롬프트 관리 프로그램")
+    print("=" * 40)
+    print(" 1. 프롬프트 추가")
+    print(" 2. 프롬프트 목록 보기")
+    print(" 3. 카테고리별 조회")
+    print(" 4. 프롬프트 검색")
+    print(" 5. 프롬프트 상세 보기")
+    print(" 6. 즐겨찾기 추가/해제")
+    print(" 7. 즐겨찾기 목록 보기")
+    print(" 0. 종료")
+    print("=" * 40)
+
+
+def main():
     prompts = get_default_prompts()
-    print(f"기본 프롬프트 {len(prompts)}개 등록됨")
-    for p in prompts:
-        print("-", p["title"], "/", p["category"])
+
+    while True:
+        show_menu()
+        choice = input("번호를 선택하세요: ").strip()
+
+        if choice == "0":
+            print("\n프로그램을 종료합니다.")
+            break
+
+
+if __name__ == "__main__":
+    main()
