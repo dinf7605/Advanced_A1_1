@@ -170,6 +170,49 @@ def show_list(prompts):
         print_prompt_line(i, p)
     print("=" * 50)
 
+def get_categories(prompts):
+    """미리 정의된 카테고리 + 사용자가 직접 입력한 카테고리 (합집합)"""
+    categories = list(CATEGORIES)
+    for p in prompts:
+        if p["category"] not in categories:
+            categories.append(p["category"])
+    return categories
+
+
+def show_by_category(prompts):
+    categories = get_categories(prompts)
+
+    print("\n[카테고리 선택]")
+    for i, c in enumerate(categories, 1):
+        print(f"  {i}. {c}")
+
+    choice = input("번호를 선택하세요: ").strip()
+
+    if not choice.isdigit():
+        print("\n숫자를 입력해주세요.")
+        return
+
+    number = int(choice)
+    if not (1 <= number <= len(categories)):
+        print("\n해당 번호의 카테고리가 없습니다.")
+        return
+
+    selected = categories[number - 1]
+
+    print("\n" + "=" * 50)
+    print(f" 카테고리: {selected}")
+    print("=" * 50)
+
+    found = 0
+    for i, p in enumerate(prompts, 1):   # ← 전체 기준 번호 유지
+        if p["category"] == selected:
+            print_prompt_line(i, p)
+            found += 1
+
+    if found == 0:
+        print(" 해당 카테고리에 등록된 프롬프트가 없습니다.")
+    print("=" * 50)
+
 def show_detail(prompts):
     if not prompts:
         print("\n등록된 프롬프트가 없습니다.")
@@ -223,7 +266,7 @@ def main():
         elif choice == "2":
             show_list(prompts)
         elif choice == "3":
-            print("\n[카테고리별 조회] 준비 중입니다.")
+            show_by_category(prompts)
         elif choice == "4":
             print("\n[프롬프트 검색] 준비 중입니다.")
         elif choice == "5":
