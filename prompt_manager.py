@@ -152,6 +152,15 @@ def add_prompt(prompts):
     })
     print(f"\n'{title}' 프롬프트가 추가되었습니다. (전체 {len(prompts)}개)")
 
+def show_list(prompts):
+    if not prompts:
+        print("\n등록된 프롬프트가 없습니다.")
+        return
+
+    print(f"\n--- 전체 프롬프트 ({len(prompts)}개) ---")
+    for i, p in enumerate(prompts, 1):
+        print(f"{i}. {p['title']}  [{p['category']}]")
+
 def show_detail(prompts):
     if not prompts:
         print("\n등록된 프롬프트가 없습니다.")
@@ -203,7 +212,7 @@ def main():
         if choice == "1":
             add_prompt(prompts)
         elif choice == "2":
-            print("\n[프롬프트 목록] 준비 중입니다.")
+            show_list(prompts)
         elif choice == "3":
             print("\n[카테고리별 조회] 준비 중입니다.")
         elif choice == "4":
