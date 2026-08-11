@@ -152,6 +152,24 @@ def add_prompt(prompts):
     })
     print(f"\n'{title}' 프롬프트가 추가되었습니다. (전체 {len(prompts)}개)")
 
+def print_prompt_line(number, p):
+    """목록 한 줄 출력 — 검색·카테고리 조회에서도 재사용한다."""
+    star = "⭐" if p["favorite"] else "　"  # 전각 공백으로 자리를 맞춘다
+    print(f"{number:>2}. {star} {p['title']}  [{p['category']}]")
+
+
+def show_list(prompts):
+    if not prompts:
+        print("\n등록된 프롬프트가 없습니다.")
+        return
+
+    print("\n" + "=" * 50)
+    print(f" 전체 프롬프트 ({len(prompts)}개)")
+    print("=" * 50)
+    for i, p in enumerate(prompts, 1):
+        print_prompt_line(i, p)
+    print("=" * 50)
+
 def show_detail(prompts):
     if not prompts:
         print("\n등록된 프롬프트가 없습니다.")
@@ -203,7 +221,7 @@ def main():
         if choice == "1":
             add_prompt(prompts)
         elif choice == "2":
-            print("\n[프롬프트 목록] 준비 중입니다.")
+            show_list(prompts)
         elif choice == "3":
             print("\n[카테고리별 조회] 준비 중입니다.")
         elif choice == "4":
