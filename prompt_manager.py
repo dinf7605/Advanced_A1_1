@@ -152,6 +152,21 @@ def add_prompt(prompts):
     })
     print(f"\n'{title}' 프롬프트가 추가되었습니다. (전체 {len(prompts)}개)")
 
+def input_number(prompts, label):
+    """번호를 입력받아 검증한다. 유효하면 번호를, 아니면 None을 돌려준다. (E3)"""
+    choice = input(label).strip()
+
+    if not choice.isdigit():
+        print("\n숫자를 입력해주세요.")
+        return None
+
+    number = int(choice)
+    if not (1 <= number <= len(prompts)):
+        print("\n해당 번호의 프롬프트가 없습니다.")
+        return None
+
+    return number
+
 def print_prompt_line(number, p):
     """목록 한 줄 출력 — 검색·카테고리 조회에서도 재사용한다."""
     star = "⭐" if p["favorite"] else "　"  # 전각 공백으로 자리를 맞춘다
@@ -243,15 +258,8 @@ def show_detail(prompts):
         return
 
     print(f"\n총 {len(prompts)}개의 프롬프트가 있습니다. (1 ~ {len(prompts)})")
-    choice = input("상세히 볼 번호: ").strip()
-
-    if not choice.isdigit():
-        print("\n숫자를 입력해주세요.")
-        return
-
-    number = int(choice)
-    if not (1 <= number <= len(prompts)):
-        print("\n해당 번호의 프롬프트가 없습니다.")
+    number = input_number(prompts, "상세히 볼 번호: ")
+    if number is None:
         return
 
     p = prompts[number - 1]
@@ -269,15 +277,8 @@ def toggle_favorite(prompts):
         return
 
     show_list(prompts)
-    choice = input("즐겨찾기를 변경할 번호: ").strip()
-
-    if not choice.isdigit():
-        print("\n숫자를 입력해주세요.")
-        return
-
-    number = int(choice)
-    if not (1 <= number <= len(prompts)):
-        print("\n해당 번호의 프롬프트가 없습니다.")
+    number = input_number(prompts, "즐겨찾기를 변경할 번호: ")
+    if number is None:
         return
 
     p = prompts[number - 1]
