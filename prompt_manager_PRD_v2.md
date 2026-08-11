@@ -121,6 +121,8 @@ def search_prompt(prompts):         # 키워드 검색
 def show_detail(prompts):           # 번호 입력 → 전체 내용 출력
 def toggle_favorite(prompts):       # 번호 입력 → 즐겨찾기 on/off
 def show_favorites(prompts):        # 즐겨찾기만 출력
+def input_required(label):          # [공통] 빈 입력이면 재요청 (E2, Day 3)
+def choose_category():              # [공통] 카테고리 번호 선택 또는 직접 입력 (Day 3)
 def get_categories(prompts):        # [공통] 카테고리 목록 (상수 ∪ 데이터, §4.3)
 def print_prompt_line(number, p):   # [공통] 목록 한 줄 출력 (Day 6 리팩토링)
 def input_number(prompts):          # [공통] 번호 입력+검증 (Day 6 리팩토링)
@@ -534,15 +536,30 @@ desktop.ini
 
 **저장 위치**: `docs/screenshots/`
 
-| 분류 | 파일명 | 내용 |
+**우선순위 구분**
+- 🔴 **필수** = 과제에 명시된 제출물 3종
+- 🟠 **강력 권장** = 안 찍으면 증거가 사라지는 것 (폴더 삭제·터미널 스크롤로 소실)
+- 🟡 **선택** = "등"에 해당. 있으면 완성도가 올라가지만 없어도 감점 아님
+
+| 우선 | 파일명 | 내용 |
 |------|--------|------|
-| 환경 | `01_env_python.png` | `python --version` + VSCode 화면 |
-| 환경 | `02_git_config.png` | `git --version` + `git config --list` (user.name/email/defaultBranch 3개가 한 화면에) |
-| 환경 | `03_vscode_github.png` | VSCode GitHub 계정 로그인 상태 |
-| 환경 | `04_clone.png` | `git clone` 명령 + 클론 폴더의 `git log` |
-| 실행 | `05_menu.png` ~ `12_error.png` | 메뉴/추가/목록/검색/카테고리/상세/즐겨찾기/오류 |
-| Git | `13_pull.png` | `git pull`로 원격 변경사항 받아오는 화면 |
-| Git | `14_git_graph.png` | `git log --oneline --graph --all` (병합 갈래가 보여야 함) |
+| 🔴 | `01_env_python.png` | `python --version` + VSCode 화면 |
+| 🔴 | `02_git_config.png` | `git --version` + `git config --list` (user.name/email/defaultBranch 3개가 한 화면에) |
+| 🟡 | `03_vscode_github.png` | VSCode GitHub 계정 로그인 상태 |
+| 🟠 | `04_clone.png` | `git clone` + 폴더 구조 + 클론 폴더의 `git log` (**삭제 전에 촬영**) |
+| 🔴 | `05_menu.png` | 메뉴 화면 |
+| 🔴 | `06_add.png` | 프롬프트 추가 |
+| 🔴 | `07_list.png` | 목록 보기 (⭐ 표시 포함) |
+| 🔴 | `08_search.png` | 검색 결과 |
+| 🟡 | `09_category.png` | 카테고리별 조회 (빈 카테고리 안내 포함하면 더 좋음) |
+| 🟡 | `10_detail.png` | 상세 보기 |
+| 🟡 | `11_favorite.png` | 즐겨찾기 토글/목록 |
+| 🟡 | `12_error.png` | 잘못된 입력 안내 메시지 |
+| 🟠 | `13_pull.png` | `git pull`로 원격 변경사항 받아오는 화면 |
+| 🔴 | `14_git_graph.png` | `git log --oneline --graph --all` (병합 갈래가 보여야 함) |
+
+> **최소한 이것만은**: 🔴 7장 + 🟠 2장 = **9장**.
+> 🟡 4장은 테스트하다 보면 어차피 화면에 뜨므로, 그때 같이 찍어두면 추가 비용이 없다.
 
 ---
 
