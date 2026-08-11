@@ -3,5 +3,6 @@ __pycache__/
 venv/
 .venv/
 .vscode/
+.claude/
 Thumbs.db
 desktop.ini
