@@ -106,11 +106,43 @@ def get_default_prompts():
         },
     ]
 
+def input_required(label):
+    """값이 빌 때까지 다시 입력받는다. (E2)"""
+    while True:
+        value = input(label).strip()
+        if value:
+            return value
+        print("  ⚠ 값을 입력해주세요.")
+
+
+def choose_category():
+    """미리 정의된 목록에서 번호로 고르거나, 없으면 직접 입력한다."""
+    print("\n[카테고리 선택]")
+    for i, c in enumerate(CATEGORIES, 1):
+        print(f"  {i}. {c}")
+    print("  (번호를 입력하거나, 목록에 없으면 직접 입력하세요)")
+
+    while True:
+        value = input("카테고리: ").strip()
+
+        if not value:
+            print("  ⚠ 카테고리를 입력해주세요.")
+            continue
+
+        if value.isdigit():
+            number = int(value)
+            if 1 <= number <= len(CATEGORIES):
+                return CATEGORIES[number - 1]
+            print(f"  ⚠ 1~{len(CATEGORIES)} 사이 번호를 입력해주세요.")
+            continue
+
+        return value  # 목록에 없는 카테고리 직접 입력
+
 def add_prompt(prompts):
     print("\n--- 프롬프트 추가 ---")
-    title = input("제목: ").strip()
-    content = input("내용: ").strip()
-    category = input("카테고리: ").strip()
+    title = input_required("제목: ")
+    content = input_required("내용: ")
+    category = choose_category()
 
     prompts.append({
         "title": title,
