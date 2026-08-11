@@ -288,6 +288,21 @@ def toggle_favorite(prompts):
     else:
         print(f"\n'{p['title']}' 즐겨찾기를 해제했습니다.")
 
+def show_favorites(prompts):
+    print("\n" + "=" * 50)
+    print(" ⭐ 즐겨찾기 목록")
+    print("=" * 50)
+
+    found = 0
+    for i, p in enumerate(prompts, 1):   # ← 전체 기준 번호 유지
+        if p["favorite"]:
+            print_prompt_line(i, p)
+            found += 1
+
+    if found == 0:
+        print(" 즐겨찾기한 프롬프트가 없습니다.")
+    print("=" * 50)
+
 def show_menu():
     print("\n" + "=" * 40)
     print("        📌 프롬프트 관리 프로그램")
@@ -323,7 +338,7 @@ def main():
         elif choice == "6":
             toggle_favorite(prompts)
         elif choice == "7":
-            print("\n[즐겨찾기 목록] 준비 중입니다.")
+            show_favorites(prompts)
         elif choice == "0":
             print("\n프로그램을 종료합니다.")
             break
