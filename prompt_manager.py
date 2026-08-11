@@ -1,8 +1,15 @@
 """프롬프트 관리 프로그램 (Prompt Manager)
 AI 프롬프트를 저장·조회·검색·즐겨찾기하는 콘솔 프로그램
 """
+import json
+import os
+import sys
+
+sys.stdout.reconfigure(encoding="utf-8")  # ⭐ 이모지가 터미널에서 깨지지 않도록
 
 CATEGORIES = ["텍스트 생성", "이미지 생성", "영상 생성", "페르소나", "자동화", "기타"]
+PROMPTS_FILE = "prompts.json"
+EXPORT_DIR = "exports"
 
 def get_default_prompts():
     """이전 미션(PRD 초안 작성 자동화)에서 작성한 프롬프트를 기본 데이터로 등록한다."""
@@ -304,6 +311,39 @@ def show_favorites(prompts):
         print(" 즐겨찾기한 프롬프트가 없습니다.")
     print("=" * 50)
 
+def save_to_json(prompts):
+    """현재 프롬프트 목록을 JSON 파일로 저장한다."""
+    try:
+        with open(PROMPTS_FILE, "w", encoding="utf-8") as f:
+            json.dump(prompts, f, ensure_ascii=False, indent=2)
+    except OSError as e:
+        print(f"\n저장에 실패했습니다: {e}")
+        return
+
+    print(f"\n{len(prompts)}개의 프롬프트를 '{PROMPTS_FILE}'에 저장했습니다.")
+
+
+def load_from_json(prompts):
+    """JSON 파일에서 프롬프트를 불러와 현재 목록을 교체한다."""
+    if not os.path.exists(PROMPTS_FILE):
+        print(f"\n'{PROMPTS_FILE}' 파일이 없습니다. 먼저 8번으로 저장해주세요.")
+        return
+
+    try:
+        with open(PROMPTS_FILE, "r", encoding="utf-8") as f:
+            loaded = json.load(f)
+    except (OSError, json.JSONDecodeError) as e:
+        print(f"\n불러오기에 실패했습니다: {e}")
+        return
+
+    if not isinstance(loaded, list):
+        print("\n파일 형식이 올바르지 않습니다.")
+        return
+
+    prompts.clear()
+    prompts.extend(loaded)
+    print(f"\n{len(prompts)}개의 프롬프트를 불러왔습니다.")
+
 def show_menu():
     print("\n" + "=" * 40)
     print("        📌 프롬프트 관리 프로그램")
@@ -314,8 +354,12 @@ def show_menu():
     print(" 4. 프롬프트 검색")
     print(" 5. 프롬프트 상세 보기")
     print(" 6. 즐겨찾기 추가/해제")
-    print(" 7. 즐겨찾기 목록 보기")
-    print(" 0. 종료")
+    print("  7. 즐겨찾기 목록 보기")
+    print("-" * 40)
+    print("  8. JSON 파일로 저장")
+    print("  9. JSON 파일에서 불러오기")
+    print("-" * 40)
+    print("  0. 종료")
     print("=" * 40)
 
 
@@ -340,6 +384,10 @@ def main():
             toggle_favorite(prompts)
         elif choice == "7":
             show_favorites(prompts)
+        elif choice == "8":
+            save_to_json(prompts)
+        elif choice == "9":
+            load_from_json(prompts)
         elif choice == "0":
             print("\n프로그램을 종료합니다.")
             break
