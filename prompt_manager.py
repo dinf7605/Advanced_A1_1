@@ -344,6 +344,52 @@ def load_from_json(prompts):
     prompts.extend(loaded)
     print(f"\n{len(prompts)}개의 프롬프트를 불러왔습니다.")
 
+def safe_filename(name):
+    """파일명으로 쓸 수 없는 문자를 _로 바꾼다."""
+    for ch in '\\/:*?"<>|':
+        name = name.replace(ch, "_")
+    return name
+
+
+def export_markdown(prompts):
+    """카테고리별로 Markdown 파일을 내보낸다."""
+    if not prompts:
+        print("\n내보낼 프롬프트가 없습니다.")
+        return
+
+    try:
+        os.makedirs(EXPORT_DIR, exist_ok=True)
+    except OSError as e:
+        print(f"\n폴더 생성에 실패했습니다: {e}")
+        return
+
+    print()
+    count = 0
+    for category in get_categories(prompts):
+        targets = [p for p in prompts if p["category"] == category]
+        if not targets:
+            continue
+
+        filename = f"{EXPORT_DIR}/{safe_filename(category)}.md"
+        try:
+            with open(filename, "w", encoding="utf-8") as f:
+                f.write(f"# {category}\n\n")
+                f.write(f"총 {len(targets)}개\n\n")
+                for p in targets:
+                    star = " ⭐" if p["favorite"] else ""
+                    f.write(f"## {p['title']}{star}\n\n")
+                    f.write("```\n")
+                    f.write(p["content"] + "\n")
+                    f.write("```\n\n")
+        except OSError as e:
+            print(f"  '{filename}' 저장 실패: {e}")
+            continue
+
+        print(f"  {filename} ({len(targets)}개)")
+        count += 1
+
+    print(f"\n총 {count}개의 카테고리 파일을 '{EXPORT_DIR}/' 폴더에 내보냈습니다.")
+
 def show_menu():
     print("\n" + "=" * 40)
     print("        📌 프롬프트 관리 프로그램")
@@ -388,6 +434,8 @@ def main():
             save_to_json(prompts)
         elif choice == "9":
             load_from_json(prompts)
+        elif choice == "10": 
+            export_markdown(prompts)
         elif choice == "0":
             print("\n프로그램을 종료합니다.")
             break
