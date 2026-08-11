@@ -172,3 +172,5 @@ git merge --no-ff feature/list    # 병합 (병합 커밋 생성)
 ```bash
 git log --oneline --graph --all
 ```
+
+*2026년 AI활용학습 A1-1 과제 제출물 — 작성자: 김재민*
