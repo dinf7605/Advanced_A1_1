@@ -213,6 +213,30 @@ def show_by_category(prompts):
         print(" 해당 카테고리에 등록된 프롬프트가 없습니다.")
     print("=" * 50)
 
+def search_prompt(prompts):
+    keyword = input("\n검색어: ").strip()
+
+    if not keyword:
+        print("검색어를 입력해주세요.")
+        return
+
+    print("\n" + "=" * 50)
+    print(f" '{keyword}' 검색 결과")
+    print("=" * 50)
+
+    found = 0
+    for i, p in enumerate(prompts, 1):   # ← 전체 기준 번호 유지
+        if keyword in p["title"] or keyword in p["content"]:
+            print_prompt_line(i, p)
+            found += 1
+
+    if found == 0:
+        print(f" '{keyword}'에 대한 검색 결과가 없습니다.")
+    else:
+        print("-" * 50)
+        print(f" 총 {found}건")
+    print("=" * 50)
+
 def show_detail(prompts):
     if not prompts:
         print("\n등록된 프롬프트가 없습니다.")
@@ -268,7 +292,7 @@ def main():
         elif choice == "3":
             show_by_category(prompts)
         elif choice == "4":
-            print("\n[프롬프트 검색] 준비 중입니다.")
+            search_prompt(prompts)
         elif choice == "5":
             show_detail(prompts)
         elif choice == "6":
