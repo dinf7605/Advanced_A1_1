@@ -152,6 +152,32 @@ def add_prompt(prompts):
     })
     print(f"\n'{title}' 프롬프트가 추가되었습니다. (전체 {len(prompts)}개)")
 
+def show_detail(prompts):
+    if not prompts:
+        print("\n등록된 프롬프트가 없습니다.")
+        return
+
+    print(f"\n총 {len(prompts)}개의 프롬프트가 있습니다. (1 ~ {len(prompts)})")
+    choice = input("상세히 볼 번호: ").strip()
+
+    if not choice.isdigit():
+        print("\n숫자를 입력해주세요.")
+        return
+
+    number = int(choice)
+    if not (1 <= number <= len(prompts)):
+        print("\n해당 번호의 프롬프트가 없습니다.")
+        return
+
+    p = prompts[number - 1]
+    print("\n" + "=" * 40)
+    print(f" [{number}] {p['title']}")
+    print(f" 카테고리 : {p['category']}")
+    print(f" 즐겨찾기 : {'예 ⭐' if p['favorite'] else '아니오'}")
+    print("-" * 40)
+    print(p["content"])
+    print("=" * 40)
+
 def show_menu():
     print("\n" + "=" * 40)
     print("        📌 프롬프트 관리 프로그램")
@@ -183,7 +209,7 @@ def main():
         elif choice == "4":
             print("\n[프롬프트 검색] 준비 중입니다.")
         elif choice == "5":
-            print("\n[상세 보기] 준비 중입니다.")
+            show_detail(prompts)
         elif choice == "6":
             print("\n[즐겨찾기 추가/해제] 준비 중입니다.")
         elif choice == "7":
