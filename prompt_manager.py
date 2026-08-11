@@ -106,6 +106,20 @@ def get_default_prompts():
         },
     ]
 
+def add_prompt(prompts):
+    print("\n--- 프롬프트 추가 ---")
+    title = input("제목: ").strip()
+    content = input("내용: ").strip()
+    category = input("카테고리: ").strip()
+
+    prompts.append({
+        "title": title,
+        "content": content,
+        "category": category,
+        "favorite": False,
+    })
+    print(f"\n'{title}' 프롬프트가 추가되었습니다. (전체 {len(prompts)}개)")
+
 def show_menu():
     print("\n" + "=" * 40)
     print("        📌 프롬프트 관리 프로그램")
@@ -129,7 +143,7 @@ def main():
         choice = input("번호를 선택하세요: ").strip()
 
         if choice == "1":
-            print("\n[프롬프트 추가] 준비 중입니다.")
+            add_prompt(prompts)
         elif choice == "2":
             print("\n[프롬프트 목록] 준비 중입니다.")
         elif choice == "3":
