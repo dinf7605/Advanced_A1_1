@@ -307,10 +307,22 @@ def get_categories(prompts):
 ### 4.4 즐겨찾기 표시
 
 - 표기: 즐겨찾기 O → `⭐`, X → 공백 또는 `-`
-- ✅ **인코딩 확인 완료 (2026-08-11 / Python 3.14.6 / 본 PC)**
-  `python -c "print('⭐ 상태 확인')"` → 파이프 리다이렉션 상황에서도 정상 출력됨.
-  → **`⭐`를 그대로 사용해도 된다.** 폴백(`[★]`, `[*]`) 불필요.
-- 단, VSCode 터미널 폰트에 따라 네모로 보일 수 있으므로 **스크린샷 찍기 전 눈으로 한 번 확인**할 것.
+- ⚠️ **터미널에 따라 갈린다 (2026-08-11 실측)**
+
+| 터미널 | 결과 |
+|--------|------|
+| PowerShell / VSCode 기본 터미널 | ✅ 정상 출력 |
+| Git Bash (stdout=cp949) | ❌ `UnicodeEncodeError: 'cp949' codec can't encode character '⭐'` → **프로그램 중단** |
+
+- **대응**: 파일 상단에 stdout을 UTF-8로 고정한다. 이러면 어느 터미널에서도 안전하다.
+
+```python
+import sys
+sys.stdout.reconfigure(encoding="utf-8")
+```
+
+- 채점자가 어떤 터미널에서 실행할지 모르므로 이 한 줄은 넣는 편이 안전하다.
+- 파일 쓰기는 `encoding="utf-8"`을 명시하므로 애초에 영향 없다.
 
 ---
 
