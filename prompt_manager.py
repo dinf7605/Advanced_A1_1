@@ -145,9 +145,60 @@ def choose_category():
 
         return value  # 목록에 없는 카테고리 직접 입력
 
+def find_duplicate_index(prompts, title):
+    """같은 제목이 이미 있으면 그 번호(1부터)를, 없으면 None을 돌려준다."""
+    for i, p in enumerate(prompts, 1):
+        if p["title"] == title:
+            return i
+    return None
+
+
+def make_unique_title(prompts, title):
+    """제목 뒤에 (2), (3) ... 을 붙여 중복되지 않는 제목을 만든다."""
+    number = 2
+    while find_duplicate_index(prompts, f"{title} ({number})") is not None:
+        number += 1
+    return f"{title} ({number})"
+
+
+def resolve_duplicate_title(prompts, title):
+    """중복 제목을 어떻게 처리할지 사용자에게 묻는다.
+
+    확정된 제목을 돌려주고, 사용자가 취소하면 None을 돌려준다.
+    같은 제목이 없으면 입력받은 제목을 그대로 돌려준다.
+    """
+    while True:
+        index = find_duplicate_index(prompts, title)
+        if index is None:
+            return title
+
+        print(f"\n  ⚠ '{title}'은(는) 이미 {index}번에 등록된 제목입니다.")
+        print("    1. 다른 제목으로 다시 입력")
+        print(f"    2. 번호를 붙여 등록 ({make_unique_title(prompts, title)})")
+        print("    3. 추가 취소")
+
+        choice = input("  선택: ").strip()
+
+        if choice == "1":
+            title = input_required("  제목: ")
+        elif choice == "2":
+            return make_unique_title(prompts, title)
+        elif choice == "3":
+            return None
+        else:
+            print("  ⚠ 1~3 중에서 선택해주세요.")
+
+
 def add_prompt(prompts):
     print("\n--- 프롬프트 추가 ---")
     title = input_required("제목: ")
+
+    # 내용을 입력받기 전에 제목 중복부터 확인한다 (헛수고 방지)
+    title = resolve_duplicate_title(prompts, title)
+    if title is None:
+        print("\n추가를 취소했습니다.")
+        return
+
     content = input_required("내용: ")
     category = choose_category()
 
