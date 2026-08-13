@@ -400,13 +400,13 @@ def show_menu():
     print(" 4. 프롬프트 검색")
     print(" 5. 프롬프트 상세 보기")
     print(" 6. 즐겨찾기 추가/해제")
-    print("  7. 즐겨찾기 목록 보기")
+    print(" 7. 즐겨찾기 목록 보기")
     print("-" * 40)
-    print("  8. JSON 파일로 저장")
-    print("  9. JSON 파일에서 불러오기")
-    print(" 10. Markdown 파일로 내보내기")
+    print(" 8. JSON 파일로 저장")
+    print(" 9. JSON 파일에서 불러오기")
+    print("10. 카테고리별 Markdown 내보내기")
     print("-" * 40)
-    print("  0. 종료")
+    print(" 0. 종료")
     print("=" * 40)
 
 
